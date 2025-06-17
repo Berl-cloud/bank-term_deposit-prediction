@@ -3,20 +3,20 @@ import pandas as pd
 import numpy as np
 import joblib
 
+import joblib
 import os
-import gdown
+import urllib.request
 
-MODEL_PATH = "final_term_deposit_model.pkl"
-FILE_ID = "1zeUS81nH6Oz02vVILM9gaC3joUjgs3zK"
-URL = f"https://drive.google.com/uc?id={FILE_ID}"
+MODEL_PATH = "final_model.joblib.gz"
+MODEL_URL = "https://raw.githubusercontent.com/Berl-cloud/bank-term_deposit-prediction/main/final_model.joblib.gz"
 
-# Download the model only if not already present
+# Download if not present
 if not os.path.exists(MODEL_PATH):
-    gdown.download(URL, MODEL_PATH, quiet=False)
+    urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
 
-
-# Load the trained pipeline (preprocessing + model)
+# Load the compressed model
 model = joblib.load(MODEL_PATH)
+
 
 st.set_page_config(page_title="Term Deposit Predictor", layout="centered")
 
