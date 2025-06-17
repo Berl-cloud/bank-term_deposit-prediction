@@ -1,28 +1,28 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
 import os
 import urllib.request
-import zipfile
+import gzip
+import joblib
 
-# Paths
 MODEL_URL = "https://github.com/Berl-cloud/bank-term_deposit-prediction/raw/refs/heads/main/final_model_streamlit.pkl.gz"
-ZIP_PATH = "final_model_streamlit.zip"
-EXTRACTED_DIR = "model"
-MODEL_FILENAME = "final_model_streamlit.pkl"
+GZ_PATH = "final_model_streamlit.pkl.gz"
+MODEL_PATH = "final_model_streamlit.pkl"
 
-# Download zip file if not present
-if not os.path.exists(ZIP_PATH):
-    urllib.request.urlretrieve(MODEL_URL, ZIP_PATH)
+# Download gzipped model if not present
+if not os.path.exists(GZ_PATH):
+    urllib.request.urlretrieve(MODEL_URL, GZ_PATH)
 
-# Extract if not already extracted
-if not os.path.exists(os.path.join(EXTRACTED_DIR, MODEL_FILENAME)):
-    with zipfile.ZipFile(ZIP_PATH, 'r') as zip_ref:
-        zip_ref.extractall(EXTRACTED_DIR)
+# Unzip the model file if not already extracted
+if not os.path.exists(MODEL_PATH):
+    with gzip.open(GZ_PATH, 'rb') as f_in:
+        with open(MODEL_PATH, 'wb') as f_out:
+            f_out.write(f_in.read())
 
-# Load the model
-model = joblib.load(os.path.join(EXTRACTED_DIR, MODEL_FILENAME))
+# Load the unzipped model
+model = joblib.load(MODEL_PATH)
+
 
 # Streamlit UI
 st.set_page_config(page_title="Term Deposit Predictor", layout="centered")
