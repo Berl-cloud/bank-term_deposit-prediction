@@ -88,7 +88,7 @@ This project uses data from a Portuguese bank's direct marketing campaign to pre
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the Repository
 
