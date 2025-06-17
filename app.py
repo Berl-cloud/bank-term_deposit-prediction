@@ -1,24 +1,28 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
+import os
 import urllib.request
 import gzip
+import shutil
 import joblib
-import os
+import streamlit as st
+import pandas as pd
 
 MODEL_URL = "https://github.com/Berl-cloud/bank-term_deposit-prediction/raw/refs/heads/main/final_model_streamlit.pkl.gz"
-GZ_PATH = "final_model_streamlit.pkl.gz"
+COMPRESSED_MODEL_PATH = "final_model_streamlit.pkl.gz"
 MODEL_PATH = "final_model_streamlit.pkl"
 
-# Download and extract the model if not already present
+# Download the compressed model if not already present
+if not os.path.exists(COMPRESSED_MODEL_PATH):
+    urllib.request.urlretrieve(MODEL_URL, COMPRESSED_MODEL_PATH)
+
+# Unzip the .gz file
 if not os.path.exists(MODEL_PATH):
-    urllib.request.urlretrieve(MODEL_URL, GZ_PATH)
-    with gzip.open(GZ_PATH, 'rb') as f_in:
+    with gzip.open(COMPRESSED_MODEL_PATH, 'rb') as f_in:
         with open(MODEL_PATH, 'wb') as f_out:
-            f_out.write(f_in.read())
+            shutil.copyfileobj(f_in, f_out)
 
 # Load the model
 model = joblib.load(MODEL_PATH)
+
 
 
 
