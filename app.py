@@ -2,28 +2,27 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
-
-import joblib
 import os
 import urllib.request
 
-MODEL_PATH = "final_model.joblib.gz"
-MODEL_URL = "https://raw.githubusercontent.com/Berl-cloud/bank-term_deposit-prediction/main/final_model.joblib.gz"
+# Define constants
+MODEL_URL = "https://raw.githubusercontent.com/Berl-cloud/bank-term_deposit-prediction/main/final_model_streamlit.pkl"
+MODEL_PATH = "final_model_streamlit.pkl"
 
-# Download if not present
+# Download model if not present
 if not os.path.exists(MODEL_PATH):
     urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
 
-# Load the compressed model
+# Load the model
 model = joblib.load(MODEL_PATH)
 
-
+# Streamlit UI
 st.set_page_config(page_title="Term Deposit Predictor", layout="centered")
 
 st.title("Term Deposit Subscription Predictor")
 st.write("Use this tool to predict whether a bank client is likely to subscribe to a term deposit based on their information.")
 
-# Collect user input
+# Collect input
 age = st.slider("Age", 18, 95, 30)
 job = st.selectbox("Job Type", ['admin.', 'technician', 'services', 'management', 'retired', 'blue-collar', 'unemployed', 'entrepreneur', 'housemaid', 'student', 'self-employed', 'unknown'])
 marital = st.selectbox("Marital Status", ['married', 'single', 'divorced'])
@@ -57,6 +56,7 @@ input_data = pd.DataFrame({
     'poutcome': [poutcome]
 })
 
+# Predict
 if st.button("Predict"):
     prediction = model.predict(input_data)
     prediction_proba = model.predict_proba(input_data)[0][1]
