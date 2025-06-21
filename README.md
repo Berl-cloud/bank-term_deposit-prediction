@@ -117,8 +117,8 @@ streamlit run app.py
 
 ## Model Deployment
 
-The Streamlit app allows users to input client features and receive a real-time prediction on whether the client is likely to subscribe.
- [Live Demo](https://your-streamlit-app-url)
+The model is deployed using Hugging Face:
+ [Deployed Model]([https://your-streamlit-app-url](https://huggingface.co/Berlana/term-deposit-subcription/blob/main/final_term_deposit_model.pkl))
 
 ---
 
