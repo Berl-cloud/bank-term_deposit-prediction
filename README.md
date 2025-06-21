@@ -118,7 +118,8 @@ streamlit run app.py
 ## Model Deployment
 
 The model is deployed using Hugging Face:
- [Deployed Model]([https://your-streamlit-app-url](https://huggingface.co/Berlana/term-deposit-subcription/blob/main/final_term_deposit_model.pkl))
+
+[Deployed Model](https://huggingface.co/Berlana/term-deposit-subcription/blob/main/final_term_deposit_model.pkl)
 
 ---
 
